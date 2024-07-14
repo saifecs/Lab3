@@ -55,7 +55,7 @@ public class University {
 			System.out.println("Address does not exist");
 		System.out.println("Student number: " + student.getStudentNumber());
 		System.out.println("Supervisor: " + student.getSupervisor());
-		System.out.println("Average mark: " + student.getAverageMark());
+		System.out.println("Average mark: " + student.getAverageMark() + "\n");
 	}
 	public static void PrintProfessor(Professor professor) {
 		System.out.println("Person Object for Professor: ");
@@ -76,7 +76,7 @@ public class University {
 			System.out.println("Address does not exist");
 		System.out.println("Professor object:");
 		System.out.println("Teacher number: " + professor.getTeacherNumber());
-		System.out.println("Teacher number: " + professor.getSalary());
+		System.out.println("Teacher number: " + professor.getSalary() + "\n");
 	}
 	public static void Grading(Student[] course, Scanner scn) {
 		
@@ -91,7 +91,7 @@ public class University {
 				if (mode.equals("exit"))
 					return;
 				else if (mode.equals("1") || mode.equals("2") || mode.equals("3")) {
-					student = course[Integer.parseInt(mode)];
+					student = course[Integer.parseInt(mode) - 1];
 					if (student == null) {
 						System.out.println("Student slot is empty");
 						continue;
@@ -103,6 +103,7 @@ public class University {
 			}
 				System.out.println("Enter a grade: ");
 				student.setAverageMark(scn.nextDouble());
+				PrintStudent(student);
 				scn.nextLine();
 			}
 		}
@@ -110,11 +111,10 @@ public class University {
 	public static void manageClass(Student[] course, Student[] waitlist, Scanner scn, Professor professor) {
 		while(true) {
 				Student student = null;
-				
-				System.out.println("Add from waitlist (add), remove a student from the class (remove) or exit to main menu (exit): ");
-				String mode = scn.nextLine();
-				mode = mode.toLowerCase();
 				while(true) {
+					System.out.println("Add from waitlist (add), remove a student from the class (remove) or exit to main menu (exit): ");
+					String mode = scn.nextLine();
+					mode = mode.toLowerCase();
 					int count = 0;
 					if (mode.equals("add")) {
 						
@@ -123,21 +123,51 @@ public class University {
 								count++;
 								continue;
 							}
+							
 							System.out.println((i + 1) + ": "+ waitlist[i].getName() + " - " + waitlist[i].getStudentNumber());
 						}
-							
-						System.out.println("Choose a student based on position or type exit to return to main menu: ");
+						if (count == 3)	{
+							System.out.println("No students in waitlist");
+							continue;
+						}
+						System.out.println("Choose a student based on position or type exit to return to previous menu: ");
 						mode = scn.nextLine();
+						mode.toLowerCase();
+						mode.replace("\n", "");
 							if (mode.equals("1") || mode.equals("2") || mode.equals("3")) {
-								student = waitlist[Integer.parseInt(mode)];
-								student.setSupervisor(professor);
+								if (waitlist[Integer.parseInt(mode) - 1] == null) {
+									System.out.println("Empty slot");
+									continue;
+								}
+									student = waitlist[Integer.parseInt(mode) - 1];
+									waitlist[Integer.parseInt(mode) - 1] = null;
+									student.setSupervisor(professor);
 							}
+							
 							else if (mode.equals("exit"))
 								break;
 							else {
 								System.out.println("Enter a valid command: ");
 								continue;
 						}
+						count = 0;
+						for (int i = 0; i < course.length; i++) {
+							if (course[i] != null) {
+								count++;
+								continue;
+							}
+							else {
+								course[i] = student;
+								break;
+							}
+						}
+						if (count == 3) {
+							System.out.println("Class full");
+							continue;
+						}
+					}
+					else if (mode.equals("remove")) {
+						count = 0;
 						for (int i = 0; i < course.length; i++) {
 							if (course[i] == null) {
 								count++;
@@ -145,20 +175,23 @@ public class University {
 							}
 							System.out.println((i + 1) + ": "+ course[i].getName() + " - " + course[i].getStudentNumber());
 						}
-					}
-					else if (mode.equals("remove")) {
-						for (int i = 0; i < course.length; i++) {
-							if (course[i] != null)
-								System.out.println((i + 1) + ": "+ course[i].getName() + " - " + course[i].getStudentNumber());
-						}
-						System.out.println("Choose a student based on position or type exit to return to main menu: ");
+						System.out.println("Choose a student based on position or type exit to return to previous menu: ");
 						mode = scn.nextLine();
 							if (mode.equals("1") || mode.equals("2") || mode.equals("3")) {
-								student = course[Integer.parseInt(mode)];
+								student = course[Integer.parseInt(mode) - 1];
+								course[Integer.parseInt(mode) - 1] = null;
 								if (student == null) {
 									System.out.println("Student slot is empty");
 									continue;
 								}
+								count = 0;
+								for (int i = 0; i < waitlist.length; i++) {
+									if (waitlist[i] == null) {
+										waitlist[i] = student;
+										break;
+									}
+								}
+								
 								student.setSupervisor(null);
 							}
 							else if (mode.equals("exit"))
@@ -173,11 +206,11 @@ public class University {
 					}
 					else {
 						System.out.println("Enter a valid command: ");
+						continue;
 					}
 				}
 				if (student != null)
 					PrintStudent(student);
-				scn.nextLine();
 			}
 		}
 
