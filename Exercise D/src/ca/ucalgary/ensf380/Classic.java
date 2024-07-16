@@ -1,5 +1,11 @@
 package ca.ucalgary.ensf380;
-
+/*
+ * Classic.java
+ * Lab3_ExD
+ * Submission Date: July 18, 2024
+ * @author Saif Youssef
+ * @author Mark Guerta
+ */
 public class Classic extends Hardcover {
 	private int origPubYear = 1860;
 	private Author theAuthor;

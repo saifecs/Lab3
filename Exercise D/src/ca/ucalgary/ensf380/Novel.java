@@ -1,5 +1,11 @@
 package ca.ucalgary.ensf380;
-
+/*
+ * Novel.java
+ * Lab3_ExD
+ * Submission Date: July 18, 2024
+ * @author Saif Youssef
+ * @author Mark Guerta
+ */
 public class Novel extends Fiction{
 	private Author[] theAuthor;
 	private Series mySeries;

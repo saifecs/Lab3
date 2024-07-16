@@ -1,6 +1,12 @@
 package ca.ucalgary.ensf380;
 import java.util.Scanner;
-
+/*
+ * MyBook.java
+ * Lab3_ExD
+ * Submission Date: July 18, 2024
+ * @author Saif Youssef
+ * @author Mark Guerta
+ */
 public class MyBook {
 	// Publisher adds new classics.
 	public static void main(String[] args) {
