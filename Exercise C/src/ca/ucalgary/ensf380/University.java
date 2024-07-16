@@ -1,4 +1,11 @@
 package ca.ucalgary.ensf380;
+/*
+ * University.java
+ * Lab3_ExC
+ * Submission Date: July 18, 2024
+ * @author Saif Youssef
+ * @author Mark Guerta
+ */
 import java.util.Scanner;
 public class University {
 	// Scenario adding final grades for three students

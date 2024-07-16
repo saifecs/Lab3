@@ -1,5 +1,11 @@
 package ca.ucalgary.ensf380;
-
+/*
+ * Professor.java
+ * Lab3_ExC
+ * Submission Date: July 18, 2024
+ * @author Saif Youssef
+ * @author Mark Guerta
+ */
 public class Professor extends Person {
 	private String teacherNumber;
 	private double salary;
