@@ -1,6 +1,6 @@
 package ca.ucalgary.ensf380;
 
-public class Novel {
+public class Novel extends Fiction{
 	private Author[] theAuthor;
 	private Series mySeries;
 	public String theme() {
@@ -18,6 +18,7 @@ public class Novel {
 	public void setMySeries(Series mySeries) {
 		this.mySeries = mySeries;
 	}
+	@Override
 	public String coverArt() {
 		return "Method coverArt called from Novel";
 	}

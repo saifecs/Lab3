@@ -2,7 +2,7 @@ package ca.ucalgary.ensf380;
 import java.util.Scanner;
 
 public class MyBook {
-	// Publisher adds two new classics to the catalog, Cinderella and Snow White.
+	// Publisher adds new classics.
 	public static void main(String[] args) {
 		Publisher BookCo = new Publisher("BookCo", "Booking Street, England");
 		Scanner scn = new Scanner(System.in);
@@ -17,12 +17,14 @@ public class MyBook {
 				break;
 		}
 		while(true) {	
-			System.out.println("Add a classic: add.");
+			System.out.println("Add a classic: add. (\"exit\" to end program)");
 			String mode = scn.nextLine();
 			mode.toLowerCase();
 			if (mode.equals("add")) {
 				addClassic(BookCo, scn);
 				System.out.println("Books total: " + BookCo.getClassicsCatalog().length);
+				for (int i = 0; i < BookCo.getClassicsCatalog().length; i++)
+					printClassic(BookCo.getClassicsCatalog()[i]);
 			}
 			else if (mode.equals("exit"))
 				break;
@@ -35,12 +37,19 @@ public class MyBook {
 	public static void addClassic(Publisher publisher, Scanner scn) {
 		Classic newClassic = new Classic();
 		Classic[] books;
-		if (publisher.getClassicsCatalog() == null)
+		Publisher publishers[] = {publisher};
+		newClassic.setBookPublisher(publishers);
+		if (publisher.getClassicsCatalog() == null) {
 			books = new Classic[1];
+			books[0] = newClassic;
+		}
 		else {
 			Classic[] catalog = publisher.getClassicsCatalog();
 			books = new Classic[catalog.length + 1];
-			System.arraycopy(catalog, 0, books, 0, catalog.length + 1);
+			for (int i = 0; i < catalog.length; i++) {
+				books[i] = catalog[i];
+			}
+			books[catalog.length] = newClassic;
 		}
 
 		publisher.setClassicsCatalog(books);
@@ -67,5 +76,14 @@ public class MyBook {
 		System.out.println("Enter number of pages: ");
 		temp = scn.nextLine();
 		newClassic.setPages(Integer.parseInt(temp));
+	}
+	public static void printClassic(Classic classic) {
+		System.out.println("Book publisher: " + classic.getBookPublisher());
+		System.out.println("ISBN: " + classic.getIsbn());
+		System.out.println("Original publication year: " + classic.getOrigPubYear());
+		System.out.println("Pages: " + classic.getPages());
+		System.out.println("Publication year: " + classic.getPublicationYear());
+		System.out.println("Author: " + classic.getTheAuthor());
+		System.out.println();
 	}
 }

@@ -7,7 +7,6 @@ public abstract class Book {
 
 	}
 	public Book(String isbn, int pages) {
-
 		this.isbn = isbn;
 		this.pages = pages;
 	}
